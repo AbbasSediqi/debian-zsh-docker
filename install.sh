@@ -65,7 +65,7 @@ services:
       - ./srv/config/nginxproxymanager:/data
       - ./srv/config/nginxproxymanager/letsencrypt:/etc/letsencrypt
   db:
-    image: 'jc21/mariadb-aria:10.4'
+    image: 'jc21/mariadb-aria'
     environment:
       MYSQL_ROOT_PASSWORD: 'npm' # Change mysql user
       MYSQL_DATABASE: 'npm'
