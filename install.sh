@@ -46,7 +46,7 @@ crazyleojay/nginx_ui:latest
 
 cd
 mkdir npm
-cd nmp
+cd npm
 cat > docker-compose.yml <<EOF
 version: '3'
 services:
