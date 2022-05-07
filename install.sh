@@ -34,7 +34,8 @@ sudo systemctl restart docker
 sudo apt -y install nginx
 
 docker volume create yacht
-docker run -d -p 8000:8000 -v /var/run/docker.sock:/var/run/docker.sock -v yacht:/config selfhostedpro/yacht
+docker run -d -p 8000:8000 --name=yacht -v /var/run/docker.sock:/var/run/docker.sock -v yacht:/config selfhostedpro/yacht
+
 
 docker run --detach \
 --publish 8880:80 --publish 8889:8889 \
@@ -51,10 +52,11 @@ version: '3'
 services:
   app:
     image: 'jc21/nginx-proxy-manager:latest'
+    ontainer_name: npm
     ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
+      - '8080:80'
+      - '8081:81'
+      - '8443:443'
     environment:
       DB_MYSQL_HOST: "db"
       DB_MYSQL_PORT: 3306
@@ -66,6 +68,7 @@ services:
       - ./srv/config/nginxproxymanager/letsencrypt:/etc/letsencrypt
   db:
     image: 'jc21/mariadb-aria'
+    ontainer_name: npm_db
     environment:
       MYSQL_ROOT_PASSWORD: 'npm' # Change mysql user
       MYSQL_DATABASE: 'npm'
