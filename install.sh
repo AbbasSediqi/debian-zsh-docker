@@ -31,11 +31,47 @@ cat > /etc/docker/daemon.json <<EOF
 }
 EOF
 sudo systemctl restart docker
+sudo apt -y install nginx
 
+docker volume create yacht
+docker run -d -p 8000:8000 -v /var/run/docker.sock:/var/run/docker.sock -v yacht:/config selfhostedpro/yacht
 
-docker volume create portainer_data
-docker run -d -p 8080:8000 -p 8081:9443 --name portainer \
-    --restart=always \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v portainer_data:/data \
-    portainer/portainer-ce:2.9.3
+docker run --detach \
+--publish 8880:80 --publish 8889:8889 \
+--name nginx_ui \
+--restart always \
+--volume /etc/nginx/nginx.conf:/usr/local/nginx/conf/nginx.conf \
+crazyleojay/nginx_ui:latest
+
+cd
+mkdir npm
+cd nmp
+cat > docker-compose.yml <<EOF
+version: '3'
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    environment:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "Changeme" # Change mysql user
+      DB_MYSQL_PASSWORD: "Changeme" # Change mysql password
+      DB_MYSQL_NAME: "npm"
+    volumes:
+      - ./srv/config/nginxproxymanager:/data
+      - ./srv/config/nginxproxymanager/letsencrypt:/etc/letsencrypt
+  db:
+    image: 'jc21/mariadb-aria:10.4'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm' # Change mysql user
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'Changeme' # Change mysql user
+      MYSQL_PASSWORD: 'Changeme' # Change mysql user
+    volumes:
+      - ./srv/config/nginxproxymanager/db:/var/lib/mysql
+EOF
+sudo docker-compose up -d
