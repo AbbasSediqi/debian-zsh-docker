@@ -61,9 +61,9 @@ services:
     image: 'jc21/nginx-proxy-manager:latest'
     ontainer_name: npm
     ports:
-      - '8080:80'
-      - '8081:81'
-      - '8443:443'
+      - '80:80'
+      - '81:81'
+      - '443:443'
     environment:
       DB_MYSQL_HOST: "db"
       DB_MYSQL_PORT: 3306
@@ -71,8 +71,8 @@ services:
       DB_MYSQL_PASSWORD: $pwd 
       DB_MYSQL_NAME: "npm"
     volumes:
-      - ./srv/config/nginxproxymanager:/data
-      - ./srv/config/nginxproxymanager/letsencrypt:/etc/letsencrypt
+      - ./npm/srv/config/nginxproxymanager:/data
+      - ./npm/srv/config/nginxproxymanager/letsencrypt:/etc/letsencrypt
   db:
     image: 'jc21/mariadb-aria'
     ontainer_name: npm_db
@@ -82,7 +82,7 @@ services:
       MYSQL_USER: $username 
       MYSQL_PASSWORD: $pwd 
     volumes:
-      - ./srv/config/nginxproxymanager/db:/var/lib/mysql
+      - ./npm/srv/config/nginxproxymanager/db:/var/lib/mysql
 EOF
 
 sudo docker-compose up -d
