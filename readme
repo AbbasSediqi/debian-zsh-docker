@@ -1,8 +1,6 @@
 wget -o- https://raw.githubusercontent.com/AbbasSediqi/debian-zsh-docker/main/install.sh
 
-Yacht Docker Manager= http://yourip:8000
-Default username= admin@yacht.local
-Default password= pass
+Portainer Docker Manager= http://yourip:9443
 
 Nginx Proxy Manager Docker= http://yourip:81
 Default username= admin@example.com
