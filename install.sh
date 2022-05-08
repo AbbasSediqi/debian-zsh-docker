@@ -85,8 +85,6 @@ sudo docker-compose up -d
 server_ip="$(curl checkip.amazonaws.com)"
 clear
 echo "Portainer Docker Manager= http://"$server_ip":9443"
-echo "    Default username= admin@yacht.local"
-echo "    Default password= pass"
 echo "---------------------------------------------------"
 echo "Nginx Proxy Manager Docker= http://"$serverip":81"
 echo "    Default username= admin@example.com"
