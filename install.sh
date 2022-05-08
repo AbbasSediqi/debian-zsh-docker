@@ -59,7 +59,7 @@ version: '3'
 services:
   app:
     image: 'jc21/nginx-proxy-manager:latest'
-    ontainer_name: npm
+    container_name: npm
     ports:
       - '80:80'
       - '81:81'
@@ -75,7 +75,7 @@ services:
       - ./npm/srv/config/nginxproxymanager/letsencrypt:/etc/letsencrypt
   db:
     image: 'jc21/mariadb-aria'
-    ontainer_name: npm_db
+    container_name: npm_db
     environment:
       MYSQL_ROOT_PASSWORD: $rootpwd 
       MYSQL_DATABASE: 'npm'
