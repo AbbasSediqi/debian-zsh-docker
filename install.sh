@@ -33,16 +33,12 @@ EOF
 sudo systemctl restart docker
 sudo apt -y install nginx
 
-docker volume create yacht
-docker run -d -p 8000:8000 --name=yacht -v /var/run/docker.sock:/var/run/docker.sock -v yacht:/config selfhostedpro/yacht
-
-
-docker run --detach \
---publish 8880:80 --publish 8889:8889 \
---name nginx_ui \
---restart always \
---volume /etc/nginx/nginx.conf:/usr/local/nginx/conf/nginx.conf \
-crazyleojay/nginx_ui:latest
+docker volume create portainer_data
+docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
+    --restart=always \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v portainer_data:/data \
+    portainer/portainer-ce:2.9.3
 
 cd
 mkdir npm
@@ -88,7 +84,7 @@ EOF
 sudo docker-compose up -d
 server_ip="$(curl checkip.amazonaws.com)"
 clear
-echo "Yacht Docker Manager= http://"$server_ip":8000"
+echo "Portainer Docker Manager= http://"$server_ip":9443"
 echo "    Default username= admin@yacht.local"
 echo "    Default password= pass"
 echo "---------------------------------------------------"
