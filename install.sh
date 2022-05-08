@@ -78,3 +78,12 @@ services:
       - ./srv/config/nginxproxymanager/db:/var/lib/mysql
 EOF
 sudo docker-compose up -d
+server_ip="$(curl checkip.amazonaws.com)"
+clear
+echo "Yacht Docker Manager= http://"$server_ip":8000"
+echo "    Default username= admin@yacht.local"
+echo "    Default password= pass"
+echo "---------------------------------------------------"
+echo "Nginx Proxy Manager Docker= http://"$serverip":8081"
+echo "    Default username= admin@example.com"
+echo "    Default password= changeme"
