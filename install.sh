@@ -47,6 +47,13 @@ crazyleojay/nginx_ui:latest
 cd
 mkdir npm
 cd npm
+
+clear
+
+echo "nginx proxy manager database config"
+read -p "db Root Password: " rootpwd 
+read -p "db Username: " username
+read -p "db Password: " pwd
 cat > docker-compose.yml <<EOF
 version: '3'
 services:
@@ -60,8 +67,8 @@ services:
     environment:
       DB_MYSQL_HOST: "db"
       DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: "Changeme" # Change mysql user
-      DB_MYSQL_PASSWORD: "Changeme" # Change mysql password
+      DB_MYSQL_USER: $username 
+      DB_MYSQL_PASSWORD: $pwd 
       DB_MYSQL_NAME: "npm"
     volumes:
       - ./srv/config/nginxproxymanager:/data
@@ -70,13 +77,14 @@ services:
     image: 'jc21/mariadb-aria'
     ontainer_name: npm_db
     environment:
-      MYSQL_ROOT_PASSWORD: 'npm' # Change mysql user
+      MYSQL_ROOT_PASSWORD: $rootpwd 
       MYSQL_DATABASE: 'npm'
-      MYSQL_USER: 'Changeme' # Change mysql user
-      MYSQL_PASSWORD: 'Changeme' # Change mysql user
+      MYSQL_USER: $username 
+      MYSQL_PASSWORD: $pwd 
     volumes:
       - ./srv/config/nginxproxymanager/db:/var/lib/mysql
 EOF
+
 sudo docker-compose up -d
 server_ip="$(curl checkip.amazonaws.com)"
 clear
