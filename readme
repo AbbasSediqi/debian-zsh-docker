@@ -1,8 +1,5 @@
 wget -o- https://raw.githubusercontent.com/AbbasSediqi/debian-zsh-docker/main/install.sh
 
-
-Change Line 61,62,72,73 
-
 Yacht Docker Manager= http://yourip:8000
 Default username= admin@yacht.local
 Default password= pass
