@@ -1,6 +1,8 @@
 sudo apt install -y zsh
 sudo chsh -s /usr/bin/zsh
+
 sudo apt install -y git
+
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 echo 'source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh' >>~/.zshrc
 echo '
@@ -31,7 +33,13 @@ cat > /etc/docker/daemon.json <<EOF
 }
 EOF
 sudo systemctl restart docker
+
 sudo apt -y install nginx
+
+sed -i 's/80 default_server/8080 default_server/' /etc/nginx/sites-available/default
+
+sudo service nginx stop
+sudo service nginx start
 
 docker volume create portainer_data
 docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
@@ -40,11 +48,10 @@ docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
     -v portainer_data:/data \
     portainer/portainer-ce:2.9.3
 
+
 cd
 mkdir npm
 cd npm
-
-clear
 
 echo "nginx proxy manager database config"
 read -p "db Root Password: " rootpwd 
@@ -82,10 +89,10 @@ services:
 EOF
 
 sudo docker-compose up -d
-server_ip="$(curl checkip.amazonaws.com)"
-clear
+
 echo "Portainer Docker Manager= http://"$server_ip":9443"
 echo "---------------------------------------------------"
 echo "Nginx Proxy Manager Docker= http://"$serverip":81"
 echo "    Default username= admin@example.com"
 echo "    Default password= changeme"
+
