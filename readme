@@ -4,6 +4,6 @@ Yacht Docker Manager= http://yourip:8000
 Default username= admin@yacht.local
 Default password= pass
 
-Nginx Proxy Manager Docker= http://yourip:8081
+Nginx Proxy Manager Docker= http://yourip:81
 Default username= admin@example.com
 Default password= changeme
